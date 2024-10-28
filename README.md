@@ -27,15 +27,15 @@ This is a full-stack application that allows users to perform Whois lookups for 
 - **Frontend**: React, Axios, DaisyUI
 - **Backend**: Node.js, Express, Axios
 - **Database**: N/A (optional integration with a database for future features)
-- **Deployment**: Heroku (or alternative services like Vercel, Netlify, etc.)
+- **Deployment**: Railway (or alternative services like Vercel, Netlify, etc.)
 
 ## Setup Instructions
 
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/your-repo-name.git
-   cd your-repo-name
+   git clone https://github.com/BlackMoFan/Whois-Domain-Lookup.git
+   cd Whois-Domain-Lookup
    ```
 
 2. Set up the backend:
@@ -89,7 +89,7 @@ This is a full-stack application that allows users to perform Whois lookups for 
    - Start the server:
 
    ```bash
-   npm start
+       npm start
    ```
 
    - The server will run on http://localhost:5000
@@ -143,5 +143,6 @@ You can deploy your application to platforms like Heroku, Vercel, or Render. Bel
 
 Contributions are welcome! Please open an issue or submit a pull request if you would like to contribute to this project.
 
-License
+## License
+
 This project is licensed under the MIT License. See the LICENSE file for details.
