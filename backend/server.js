@@ -20,8 +20,6 @@ app.post('/api/whois', async (req, res) => {
         return res.status(400).json({ error: 'Invalid domain or type' });
     }
 
-    console.log("domain entered: ", domain);
-
     try {
         const apiKey = process.env.WHOIS_API_KEY;
         const response = await axios.get(`https://www.whoisxmlapi.com/whoisserver/WhoisService`, {
@@ -34,7 +32,11 @@ app.post('/api/whois', async (req, res) => {
 
         const data = response.data;
 
-        console.log("data:", data);
+        // Check for an error message in the response
+        if (data.ErrorMessage) {
+            console.error("Error fetching from Whois API:", data.ErrorMessage);
+            return res.status(400).json({ error: data.ErrorMessage.msg }); // Respond with the error message from the API
+        }
 
         // Parse the response based on type
         let result;
@@ -61,17 +63,19 @@ app.post('/api/whois', async (req, res) => {
         res.json(result);
     } catch (error) {
         console.error('Error fetching from Whois API:', error.message);
+
         // Check if the error is a network error
         if (error.isAxiosError) {
-            // Network error
-            console.error('Network error:', error.message);
-            res.status(500).json({ error: 'Network error occurred while connecting to Whois API. Please try again later.' });
-        } else {
-            // Handle other types of errors
-            console.error('Response data:', error.response?.data);
-            console.error('Response status:', error.response?.status);
-            res.status(500).json({ error: 'Failed to fetch data from Whois API' });
+            if (error.code === 'ECONNREFUSED') {
+                return res.status(503).json({ error: 'Service unavailable. Please try again later.' });
+            } else {
+                return res.status(500).json({ error: 'Network error occurred while connecting to Whois API. Please try again later.' });
+            }
         }
+        // Handle other types of errors
+        console.error('Response data:', error.response?.data);
+        console.error('Response status:', error.response?.status);
+        return res.status(500).json({ error: 'Failed to fetch data from Whois API' });
     }
 });
 

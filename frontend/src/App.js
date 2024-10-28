@@ -60,7 +60,7 @@ function App() {
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-200">
         <h1 className="text-3xl font-bold mb-6">Whois Lookup</h1>
         <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
-          <label for="domainname">Domain name:</label>
+          <label htmlFor="domainname">Domain name:</label>
           <input
             name="domainname"
             type="text"
@@ -70,7 +70,7 @@ function App() {
             required
             className="input input-bordered w-full mb-4 bg-transparent focus:border-primary text-black"
           />
-          <label for="typeofinfo">Information type:</label>
+          <label htmlFor="typeofinfo">Information type:</label>
           <select value={type} name="typeofinfo" onChange={(e) => setType(e.target.value)} className="select select-bordered w-full mb-4 bg-transparent text-black">
             <option value="domain">Domain Info</option>
             <option value="contact">Contact Info</option>
