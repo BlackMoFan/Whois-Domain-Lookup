@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// Endpoint
+// Endpoint for WHOIS data retrieval
 app.post('/api/whois', async (req, res) => {
     const { domain, type } = req.body;
 
@@ -21,24 +21,25 @@ app.post('/api/whois', async (req, res) => {
     }
 
     try {
+        // Make a request to the WHOIS API
         const apiKey = process.env.WHOIS_API_KEY;
         const response = await axios.get(`https://www.whoisxmlapi.com/whoisserver/WhoisService`, {
             params: {
-                apiKey,
-                domainName: domain,
-                outputFormat: 'JSON',
+                apiKey, // pass the apiKey for authentication
+                domainName: domain, // pass the domain name to domainName input parameter
+                outputFormat: 'JSON', // use the "outputFormat" input parameter and set to JSON
             },
         });
 
         const data = response.data;
 
-        // Check for an error message in the response
+        // Handle API error messages
         if (data.ErrorMessage) {
             console.error("Error fetching from Whois API:", data.ErrorMessage);
-            return res.status(400).json({ error: data.ErrorMessage.msg }); // Respond with the error message from the API
+            return res.status(400).json({ error: data.ErrorMessage.msg });
         }
 
-        // Parse the response based on type
+        // Format response based on requested type
         let result;
         if (type === 'domain') {
             result = {
@@ -48,7 +49,7 @@ app.post('/api/whois', async (req, res) => {
                 expiresDate: data.WhoisRecord.expiresDate,
                 estimatedDomainAge: data.WhoisRecord.estimatedDomainAge,
                 hostnames: data.WhoisRecord.nameServers.hostNames.map(hostname => {
-                    return hostname.length > 25 ? hostname.slice(0, 25) + '...' : hostname;
+                    return hostname.length > 25 ? hostname.slice(0, 25) + '...' : hostname; // the field ‘hostnames’ should be comma-separated and truncated with ... if longer than 25 characters.
                 }).join(', ')
             };
         } else {
@@ -64,7 +65,7 @@ app.post('/api/whois', async (req, res) => {
     } catch (error) {
         console.error('Error fetching from Whois API:', error.message);
 
-        // Check if the error is a network error
+        // Network error handling
         if (error.isAxiosError) {
             if (error.code === 'ECONNREFUSED') {
                 return res.status(503).json({ error: 'Service unavailable. Please try again later.' });
@@ -72,7 +73,8 @@ app.post('/api/whois', async (req, res) => {
                 return res.status(500).json({ error: 'Network error occurred while connecting to Whois API. Please try again later.' });
             }
         }
-        // Handle other types of errors
+        
+        // Log and handle other types of errors
         console.error('Response data:', error.response?.data);
         console.error('Response status:', error.response?.status);
         return res.status(500).json({ error: 'Failed to fetch data from Whois API' });

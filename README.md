@@ -89,7 +89,7 @@ This is a full-stack application that allows users to perform Whois lookups for 
    - Start the server:
 
    ```bash
-       npm start
+       node server.js
    ```
 
    - The server will run on http://localhost:5000
@@ -112,13 +112,57 @@ This is a full-stack application that allows users to perform Whois lookups for 
 
 ## Deploying the Application
 
-You can deploy your application to platforms like Heroku, Vercel, or Render. Below are instructions for deploying on Railway.
+You can deploy your application to platforms like Heroku, Vercel, or Render. Below are instructions for deploying the backend on Railway and the frontend on Vercel.
+
+### Backend Deployment
 
 1. Go to [Railway](https://railway.app/) and create an account if you haven't already.
-2. Create a new project.
-3. Connect your GitHub repository or upload your project files.
-4. In the Railway dashboard, create two services: - Backend Service: Set the environment variable for your API key in the Railway environment settings. - Frontend Service: Point it to the `frontend` directory.
-   Deploy both services.
+2. Create a New Project.
+   - Go to the Railway dashboard
+   - Click New Project > Deploy from Github repo (connect your GitHub if you haven't already)
+   - Choose your GitHub repository containing the Express.js app.
+3. Configure the Environment Variables
+   - Once Railway imports your project, go to the Settings tab in your Railway project.
+   - Click on **Variables**.
+   - Add the environment variable for the WHOIS API key:
+     - Key: `WHOIS_API_KEY`
+     - Value: `your_actual_whois_api_key`
+
+Railway will inject this variable automatically during deployment, so your app can use it without needing the `.env` file locally.
+
+4. Configure the Port
+
+   - Railway uses the `PORT` environment variable by default, which your app already supports with `process.env.PORT || 5000`.
+   - Railway will assign a port during runtime, so no additional configuration for the port is necessary.
+
+5. Deploy the Project
+
+   - Go back to your Railway project dashboard and click Deploy if it hasn’t started automatically.
+   - Railway will start deploying your app by installing dependencies and building the project.
+
+6. Test the Deployment
+   - After a successful deployment, Railway will provide a public URL for your app.
+   - Visit the provided URL to check if your app is running correctly.
+   - Test your /api/whois endpoint by sending a POST request using tools like Postman or curl to make sure it’s functioning as expected.
+
+### Frontend Deployment
+
+1. Deploy Frontend to Vercel
+
+   - Go to [Vercel](https://vercel.com/) and log in or create an account.
+   - Import your frontend project from your Git repository.
+   - During the import, Vercel will automatically detect it's a React app and configure the necessary build settings.
+
+2. Set Up Environment Variables in Vercel
+
+   - In the Vercel dashboard, go to your project settings.
+   - Navigate to the Environment Variables section.
+   - Add a new variable named `REACT_APP_BACKEND_URL` and set its value to the URL of your Railway backend, such as `https://your-backend-url/`.
+   - Make sure to save the changes.
+
+3. Redeploy the Project
+   - Once the environment variable is set, trigger a redeployment by clicking Deploy in the Vercel dashboard.
+   - This will ensure that your React app fetches the backend URL from the environment variable on Vercel.
 
 ## Error Handling
 
