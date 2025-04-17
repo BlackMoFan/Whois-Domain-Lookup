@@ -6,25 +6,8 @@ require('dotenv').config();
 
 const app = express();
 
-// Allow requests from your frontend's Vercel domain
-const allowedOrigins = [
-  'https://whois-domain-lookup-phi.vercel.app', // Frontend URL
-  'http://localhost:3000', // Localhost for development
-];
-
 // Middleware
-app.use(cors({
-    origin: (origin, callback) => {
-    if (!origin) return callback(null, true); // Allow requests with no origin (e.g., Postman, curl)
-    if (allowedOrigins.includes(origin)) {
-        callback(null, true); // Allow the origin if it's in the allowedOrigins array
-    } else {
-        callback(new Error('Not allowed by CORS')); // Block the origin if it's not allowed
-    }
-    },
-    methods: ['GET', 'POST', 'OPTIONS'], // Allow specific HTTP methods
-    allowedHeaders: ['Content-Type'], // Allow necessary headers
-}));
+app.use(cors());
 
 // app.options('*', cors());
 
