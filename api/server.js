@@ -24,7 +24,7 @@ app.options('*', cors());
 app.use(express.json());
 
 // Endpoint for WHOIS data retrieval
-app.post('/api/whois', async (req, res) => {
+app.post('/whois', async (req, res) => {
     const { domain, type } = req.body;
 
     // Validate input
