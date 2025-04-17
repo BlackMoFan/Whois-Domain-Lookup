@@ -22,7 +22,7 @@ function App() {
 
     try {
       // API request to get Whois data based on selected type
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/whois`, { domain, type });
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/whois`, { domain, type });
       type === 'domain' ? setResultDomain(response.data) : setResultContact(response.data);
     } catch (err) {
       // Error handling based on API response status
