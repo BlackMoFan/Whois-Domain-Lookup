@@ -6,12 +6,21 @@ require('dotenv').config();
 
 const app = express();
 
+// Allow requests from your frontend's Vercel domain
+const allowedOrigins = [
+  'https://whois-domain-lookup-8s30eu4e7-blackmofans-projects.vercel.app', // Frontend URL
+];
+
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: allowedOrigins,
+    methods: ['GET', 'POST'], // Allow specific HTTP methods
+    credentials: true, // Allow cookies if needed
+}));
 app.use(express.json());
 
 // Endpoint for WHOIS data retrieval
-app.post('/api/whois', async (req, res) => {
+app.post('/whois', async (req, res) => {
     const { domain, type } = req.body;
 
     // Validate input
