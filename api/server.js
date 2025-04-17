@@ -16,15 +16,15 @@ const allowedOrigins = [
 app.use(cors({
     origin: allowedOrigins,
     methods: '*', // Allow specific HTTP methods
-    allowedHeaders: ['Content-Type', 'Authorization'], 
+    allowedHeaders: ['Content-Type', 'application/json'], 
 }));
 
-app.options('*', cors());
+// app.options('*', cors());
 
 app.use(express.json());
 
 // Endpoint for WHOIS data retrieval
-app.post('/whois', async (req, res) => {
+app.post('/api/whois', async (req, res) => {
     const { domain, type } = req.body;
 
     // Validate input
