@@ -15,7 +15,6 @@ const allowedOrigins = [
 app.use(cors({
     origin: allowedOrigins,
     methods: ['GET', 'POST'], // Allow specific HTTP methods
-    credentials: true, // Allow cookies if needed
 }));
 app.use(express.json());
 
