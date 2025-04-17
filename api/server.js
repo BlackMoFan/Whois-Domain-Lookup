@@ -9,14 +9,18 @@ const app = express();
 // Allow requests from your frontend's Vercel domain
 const allowedOrigins = [
   'https://whois-domain-lookup-phi.vercel.app', // Frontend URL
+  'http://localhost:3000', // Localhost for development
 ];
 
 // Middleware
 app.use(cors({
-    origin: '*',
-    methods: ['GET', 'POST', 'OPTIONS'], // Allow specific HTTP methods
+    origin: allowedOrigins,
+    methods: ['GET', 'POST'], // Allow specific HTTP methods
     allowedHeaders: ['Content-Type', 'Authorization'], 
 }));
+
+app.options('*', cors());
+
 app.use(express.json());
 
 // Endpoint for WHOIS data retrieval
