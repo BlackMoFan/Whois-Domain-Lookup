@@ -15,11 +15,9 @@ const allowedOrigins = [
 // Middleware
 app.use(cors({
     origin: allowedOrigins,
-    methods: ['GET', 'POST', 'OPTIONS'], // Allow specific HTTP methods
+    methods: ['GET', 'POST'], // Allow specific HTTP methods
     allowedHeaders: ['Content-Type', 'application/json'], 
 }));
-
-// app.options('*', cors());
 
 app.use(express.json());
 
