@@ -5,6 +5,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
+const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
@@ -34,7 +35,7 @@ app.post('/api/whois', async (req, res) => {
 
         // Handle API error messages
         if (data.ErrorMessage) {
-            // console.error("Error fetching from Whois API:", data.ErrorMessage);
+            console.error("Error fetching from Whois API:", data.ErrorMessage);
             return res.status(400).json({ error: data.ErrorMessage.msg });
         }
 
@@ -80,5 +81,7 @@ app.post('/api/whois', async (req, res) => {
     }
 });
 
-// Export the app for Vercel serverless functions
-module.exports = app;
+// Start server
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
