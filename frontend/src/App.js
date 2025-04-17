@@ -22,7 +22,7 @@ function App() {
 
     try {
       // API request to get Whois data based on selected type
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/whois`, { domain, type },
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/whois`, { domain: domain, type: type },
         {
           headers: {
             'Content-Type': 'application/json',
