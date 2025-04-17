@@ -5,7 +5,6 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
 // Allow requests from your frontend's Vercel domain
 const allowedOrigins = [
@@ -90,9 +89,5 @@ app.post('/api/whois', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
-
 // Export the app for Vercel serverless functions
-// module.exports = app;
+module.exports = app;
