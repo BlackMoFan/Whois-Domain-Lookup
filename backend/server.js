@@ -8,7 +8,7 @@ const app = express();
 
 // Allow requests from your frontend's Vercel domain
 const allowedOrigins = [
-  'https://whois-domain-lookup-phi.vercel.app/', // Frontend URL
+  'https://whois-domain-lookup-phi.vercel.app', // Frontend URL
 ];
 
 // Middleware
