@@ -27,6 +27,7 @@ function App() {
           headers: {
             'Content-Type': 'application/json',
           },
+          withCredentials: true,
         }
       );
       type === 'domain' ? setResultDomain(response.data) : setResultContact(response.data);
