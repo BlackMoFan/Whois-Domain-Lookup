@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 5000;
 
 // Allow requests from your frontend's Vercel domain
 const allowedOrigins = [
-  'https://whois-domain-lookup-8s30eu4e7-blackmofans-projects.vercel.app', // Frontend URL
+  'https://whois-domain-lookup-phi.vercel.app/', // Frontend URL
 ];
 
 // Middleware
