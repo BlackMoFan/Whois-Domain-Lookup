@@ -18,6 +18,7 @@ app.use(cors({
     methods: ['GET', 'POST'], // Allow specific HTTP methods
     allowedHeaders: ['Content-Type', 'application/json'], 
 }));
+app.options('*', cors()); // Handle preflight requests
 
 app.use(express.json());
 
